@@ -1,0 +1,31 @@
+# DataSource Config
+spring:
+  application:
+    name: file-manage
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        #false不进行注册
+        enabled: true
+        #nacos地址
+        server-addr: 127.0.0.1:8848
+      config:
+        #false不启用配置中心
+        enabled: true
+        #配置中心地址
+        server-addr: 127.0.0.1:8848
+        #配置文件格式
+        file-extension: yml
+        #加载共享配置
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: true
+      #字段为null的实行是否返回
+    default-property-inclusion: always
