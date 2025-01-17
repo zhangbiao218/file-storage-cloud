@@ -8,12 +8,12 @@ spring:
     nacos:
       discovery:
         #false不进行注册
-        enabled: true
+        enabled: false
         #nacos地址
         server-addr: 127.0.0.1:8848
       config:
         #false不启用配置中心
-        enabled: true
+        enabled: false
         #配置中心地址
         server-addr: 127.0.0.1:8848
         #配置文件格式

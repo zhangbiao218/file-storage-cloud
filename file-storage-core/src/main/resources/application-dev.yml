@@ -33,6 +33,7 @@ logging:
 
 #minio配置
 minioplus:
-  backend: http://localhost:9000  #minio存储服务地址
+  backend: http://172.25.0.1:9000  #minio存储服务地址
+  browserUrl: http://localhost:8000/minio #前端浏览器访问地址,如果需要被nginx代理的话,可以配置
   key: gh1K6HKXGly1N72ci87D #Access key
   secret: bG95pQDC3GVfie5K3VyvsnZQrnlQtx6YgOLN0O7b  #Secret key
