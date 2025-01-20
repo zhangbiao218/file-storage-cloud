@@ -1,6 +1,5 @@
 package com.tiansuo.file.storage.core.controller;
 
-import com.tiansuo.file.storage.core.enums.MinioPlusErrorCode;
 import com.tiansuo.file.storage.api.model.dto.BusinessBindFileDTO;
 import com.tiansuo.file.storage.core.model.dto.FileCheckDTO;
 import com.tiansuo.file.storage.core.model.dto.FileCompleteDTO;
@@ -8,7 +7,6 @@ import com.tiansuo.file.storage.core.model.vo.CompleteResultVo;
 import com.tiansuo.file.storage.core.model.vo.FileCheckResultVo;
 import com.tiansuo.file.storage.core.model.vo.FilePreShardingVo;
 import com.tiansuo.file.storage.api.model.vo.FileUploadResultVo;
-import com.tiansuo.file.storage.api.response.ResultModel;
 import com.tiansuo.file.storage.core.service.StorageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,9 +40,8 @@ public class StorageController {
      */
     @ApiOperation(value = "文件上传(普通)")
     @GetMapping("/upload/file")
-    public ResultModel<FileUploadResultVo> uploadFile(@RequestParam("file") MultipartFile file) {
-        FileUploadResultVo fileUploadResultVo = storageService.uploadFile(file);
-        return ResultModel.success(fileUploadResultVo);
+    public FileUploadResultVo uploadFile(@RequestParam("file") MultipartFile file) {
+        return storageService.uploadFile(file);
     }
 
 
@@ -58,11 +55,8 @@ public class StorageController {
      */
     @ApiOperation(value = "文件预分片方法")
     @GetMapping("/upload/sharding")
-    public ResultModel<FilePreShardingVo> sharding(@RequestParam("fileSize") Long fileSize) {
-
-        FilePreShardingVo resultVo = storageService.sharding(fileSize);
-
-        return ResultModel.success(resultVo);
+    public FilePreShardingVo sharding(@RequestParam("fileSize") Long fileSize) {
+        return storageService.sharding(fileSize);
     }
 
     /**
@@ -74,9 +68,8 @@ public class StorageController {
      */
     @ApiOperation(value = "分片上传任务初始化")
     @PostMapping("/upload/init")
-    public ResultModel<FileCheckResultVo> init(@RequestBody FileCheckDTO fileCheckDTO) {
-        FileCheckResultVo resultVo = storageService.init(fileCheckDTO.getFileMd5(), fileCheckDTO.getFullFileName(), fileCheckDTO.getFileSize(), fileCheckDTO.getIsPrivate());
-        return ResultModel.success(resultVo);
+    public FileCheckResultVo init(@RequestBody FileCheckDTO fileCheckDTO) {
+        return storageService.init(fileCheckDTO.getFileMd5(), fileCheckDTO.getFullFileName(), fileCheckDTO.getFileSize(), fileCheckDTO.getIsPrivate());
     }
 
     /**
@@ -87,9 +80,8 @@ public class StorageController {
      */
     @ApiOperation(value = "文件上传完成(合并)")
     @PostMapping("/upload/complete")
-    public ResultModel<Object> complete(@RequestBody FileCompleteDTO fileCompleteDTO) {
-        CompleteResultVo completeResultVo = storageService.complete(fileCompleteDTO.getFileKey(), fileCompleteDTO.getPartMd5List());
-        return ResultModel.success(completeResultVo);
+    public CompleteResultVo complete(@RequestBody FileCompleteDTO fileCompleteDTO) {
+        return storageService.complete(fileCompleteDTO.getFileKey(), fileCompleteDTO.getPartMd5List());
     }
 
     /**
@@ -99,9 +91,9 @@ public class StorageController {
      * @return 文件下载地址
      */
     @ApiOperation(value = "文件下载(返回文件地址供前端访问下载)")
-    @GetMapping("/download/url")
-    public ResultModel<String> download(@RequestParam(value = "fileKey") String fileKey) {
-        return ResultModel.success(storageService.download(fileKey));
+    @GetMapping(value = "/download/url")
+    public String download(@RequestParam(value = "fileKey") String fileKey) {
+        return storageService.download(fileKey);
     }
 
 
@@ -125,8 +117,8 @@ public class StorageController {
      */
     @ApiOperation(value = "图片预览(原图)")
     @GetMapping("/image")
-    public ResultModel<String> previewOriginal(@RequestParam(value = "fileKey") String fileKey) {
-        return ResultModel.success(storageService.image(fileKey));
+    public String previewOriginal(@RequestParam(value = "fileKey") String fileKey) {
+        return storageService.image(fileKey);
     }
 
     /**
@@ -137,10 +129,8 @@ public class StorageController {
      */
     @ApiOperation(value = "图片预览 - 缩略图")
     @GetMapping("/preview")
-    public  ResultModel<String> previewMedium(@RequestParam(value = "fileKey") String fileKey) {
-        String url = storageService.preview(fileKey);
-        return  ResultModel.success(url) ;
-        //TODO 异常处理类有问题需修改
+    public  String previewMedium(@RequestParam(value = "fileKey") String fileKey) {
+        return storageService.preview(fileKey);
     }
 
     /**
@@ -148,12 +138,8 @@ public class StorageController {
      */
     @ApiOperation(value = "上传的文件绑定业务数据")
     @PostMapping("/bind/business")
-    public ResultModel bindBusinessAndFile(@RequestBody BusinessBindFileDTO businessBindFileDTO) {
-        if (storageService.bindBusinessAndFile(businessBindFileDTO.getFileKeyList(),businessBindFileDTO.getBusinessKey())){
-            return ResultModel.success("绑定成功");
-        }else{
-            return ResultModel.fail(MinioPlusErrorCode.FILE_BIND_BUSINESS_FAILED.getCode(),MinioPlusErrorCode.FILE_BIND_BUSINESS_FAILED.getMessage());
-        }
+    public Boolean bindBusinessAndFile(@RequestBody BusinessBindFileDTO businessBindFileDTO) {
+        return storageService.bindBusinessAndFile(businessBindFileDTO.getFileKeyList(),businessBindFileDTO.getBusinessKey());
     }
 
     /**
@@ -164,8 +150,8 @@ public class StorageController {
      */
     @ApiOperation(value = "根据businessKey查询绑定的文件列表")
     @GetMapping("/query/file")
-    public ResultModel<List<FileUploadResultVo>> getFileByBusinessKey(@RequestParam(value = "businessKey") String businessKey) {
-        return ResultModel.success(storageService.getFileByBusinessKey(businessKey));
+    public List<FileUploadResultVo> getFileByBusinessKey(@RequestParam(value = "businessKey") String businessKey) {
+        return storageService.getFileByBusinessKey(businessKey);
     }
 
     /**
@@ -175,8 +161,8 @@ public class StorageController {
      */
     @ApiOperation(value = "根据businessKey删除文件")
     @GetMapping("/delete/file/businessKey")
-    public ResultModel deleteFileByBusinessKey(@RequestParam(value = "businessKey") String businessKey) {
-        return ResultModel.success(storageService.deleteFileByBusinessKey(businessKey));
+    public Boolean deleteFileByBusinessKey(@RequestParam(value = "businessKey") String businessKey) {
+        return storageService.deleteFileByBusinessKey(businessKey);
     }
 
     /**
@@ -186,8 +172,8 @@ public class StorageController {
      */
     @ApiOperation(value = "根据fileKey删除文件")
     @GetMapping("/delete/file/fileKey")
-    public ResultModel deleteFileByFileKey(@RequestParam(value = "fileKey") String fileKey) {
-        return ResultModel.success(storageService.deleteFileByFileKey(fileKey));
+    public Boolean deleteFileByFileKey(@RequestParam(value = "fileKey") String fileKey) {
+        return storageService.deleteFileByFileKey(fileKey);
     }
 
 }

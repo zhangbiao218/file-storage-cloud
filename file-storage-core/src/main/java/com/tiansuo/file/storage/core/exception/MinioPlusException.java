@@ -1,7 +1,7 @@
 package com.tiansuo.file.storage.core.exception;
 
 
-import com.tiansuo.file.storage.core.enums.MinioPlusErrorCode;
+import com.tiansuo.file.storage.api.enums.MinioPlusErrorCode;
 
 /**
  * MinioPlus专用异常定义
@@ -11,16 +11,16 @@ public class MinioPlusException extends RuntimeException {
 
     private static final long serialVersionUID = 772046747932011086L;
 
-    private int errorCode;
+    private int code;
 
-    private String errorMessage;
+    private String message;
 
-    public int getErrorCode() {
-        return errorCode;
+    public int getCode() {
+        return code;
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public MinioPlusException() {
@@ -32,20 +32,20 @@ public class MinioPlusException extends RuntimeException {
     }
 
     public MinioPlusException(MinioPlusErrorCode minioPlusErrorCode){
-        this.errorCode = minioPlusErrorCode.getCode();
-        this.errorMessage = minioPlusErrorCode.getMessage();
+        this.code = minioPlusErrorCode.getCode();
+        this.message = minioPlusErrorCode.getMessage();
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public MinioPlusException(int errorCode, String errorMessage) {
-        this.errorCode = errorCode;
-        this.errorMessage = errorMessage;
+    public MinioPlusException(int code, String message) {
+        this.code = code;
+        this.message = message;
     }
 }

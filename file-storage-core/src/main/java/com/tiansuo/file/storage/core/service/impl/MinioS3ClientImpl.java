@@ -7,7 +7,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.tiansuo.file.storage.core.config.MinioPlusProperties;
 import com.tiansuo.file.storage.core.constant.CommonConstant;
-import com.tiansuo.file.storage.core.enums.MinioPlusErrorCode;
+import com.tiansuo.file.storage.api.enums.MinioPlusErrorCode;
 import com.tiansuo.file.storage.core.exception.MinioPlusException;
 import com.tiansuo.file.storage.core.model.vo.ListParts;
 import com.tiansuo.file.storage.core.service.MinioS3Client;

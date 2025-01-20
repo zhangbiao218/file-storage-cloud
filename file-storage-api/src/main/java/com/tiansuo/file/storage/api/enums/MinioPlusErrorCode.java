@@ -1,4 +1,4 @@
-package com.tiansuo.file.storage.core.enums;
+package com.tiansuo.file.storage.api.enums;
 
 /**
  * MinIO Plus 错误码
@@ -25,6 +25,8 @@ public enum MinioPlusErrorCode {
     FILE_CREATE_FAILED(1009,"文件创建失败"),
     FILE_MD5_CHECK_FAILED(1010,"fileMd5不能为空"),
     FILE_BIND_BUSINESS_FAILED(1011,"文件绑定业务失败,文件不存在"),
+    FILE_DEL_BY_BUSINESS_KEY_FAILED(1012,"根据业务key删除文件失败"),
+    FILE_DEL_BY_FILE_KEY_FAILED(1013,"根据文件key删除文件失败"),
 
 
     /**

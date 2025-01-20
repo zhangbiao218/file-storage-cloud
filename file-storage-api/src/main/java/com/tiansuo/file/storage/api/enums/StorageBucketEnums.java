@@ -1,4 +1,4 @@
-package com.tiansuo.file.storage.core.enums;
+package com.tiansuo.file.storage.api.enums;
 
 
 import cn.hutool.core.util.ArrayUtil;
